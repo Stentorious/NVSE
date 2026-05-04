@@ -2293,6 +2293,7 @@ void CommandTable::AddCommandsV6()
 	ADD_CMD(Jmp_If_True);
 	ADD_CMD(Jmp_If_False);
 	ADD_CMD(Jmp);
+	ADD_CMD(GetUIFloatInherited);
 }
 
 namespace PluginAPI
