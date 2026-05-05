@@ -2293,6 +2293,18 @@ void CommandTable::AddCommandsV6()
 	ADD_CMD(Jmp_If_True);
 	ADD_CMD(Jmp_If_False);
 	ADD_CMD(Jmp);
+
+	// 6.4 beta 08
+	ADD_CMD(V3NormalizeEx);
+	ADD_CMD(V3CrossproductEx);
+	ADD_CMD(QFromEulerEx);
+	ADD_CMD(QFromAxisAngleEx);
+	ADD_CMD(QNormalizeEx);
+	ADD_CMD(QMultQuatQuatEx);
+	ADD_CMD(QMultQuatVector3Ex);
+	ADD_CMD(QInterpolateEx);
+	ADD_CMD(QToEulerEx);
+
 }
 
 namespace PluginAPI
