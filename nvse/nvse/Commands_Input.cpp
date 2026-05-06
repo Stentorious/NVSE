@@ -105,6 +105,33 @@ UInt32 GetControl(UInt32 whichControl, UInt32 type)
 	return result;
 }
 
+UInt32 GetControlFromKey(UInt32 keycode, UInt32 type)
+{
+	OSInputGlobals* globs = *g_OSInputGlobals;
+
+	if (type > OSInputGlobals::kControlType_Gamepad)
+		return 0xFF;
+
+	UInt8* binds = globs->keyBinds[type];
+	if (type == OSInputGlobals::kControlType_Gamepad) {
+		if (IsDisallowedControllerButton(keycode))
+			return 0xFF;
+
+		keycode = DX2BS(keycode);
+	}
+	else
+		keycode = (keycode >= 0x100) ? keycode - 0x100 : keycode;
+
+	for (UInt32 i = 0; i < OSInputGlobals::kMaxControlBinds; i++)
+	{
+		if (binds[i] == keycode)
+			return i;
+	}
+
+	return 0xFF;
+}
+
+
 void SetControl(UInt32 whichControl, UInt32 type, UInt32 keycode)
 {
 	OSInputGlobals	* globs = *g_OSInputGlobals;
@@ -416,6 +443,25 @@ bool Cmd_GetControl_Execute(COMMAND_ARGS)
 
 	return true;
 }
+
+bool Cmd_GetControlFromKey_Execute(COMMAND_ARGS)
+{
+	UInt32 keycode = 0;
+	UInt32 whichDevice = OSInputGlobals::kControlType_Keyboard;
+	*result = -1;
+
+	if (!ExtractArgs(EXTRACT_ARGS, &keycode, &whichDevice) || whichDevice < OSInputGlobals::kControlType_Keyboard || whichDevice > OSInputGlobals::kControlType_Gamepad)
+		return true;
+
+	UInt32 ctrl = GetControlFromKey(keycode, whichDevice);
+	*result = (ctrl == 0xFF) ? -1.0 : ctrl;
+
+	if (IsConsoleMode())
+		Console_Print("GetKeyControl: %d maps to Control %d", keycode, *result);
+
+	return true;
+}
+
 
 bool Cmd_GetAltControl_Execute(COMMAND_ARGS)
 {
