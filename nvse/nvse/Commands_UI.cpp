@@ -384,7 +384,7 @@ bool Cmd_SortUIListBox_Execute(COMMAND_ARGS)
 		Tile::Value* destinationVal = tile->GetComponentValue(sortSpec.destinationPath.c_str());
 		if (!destinationVal) {
 			DEBUG_PRINT("Failed to find destination trait %s for tile %d",
-				sortSpec.destinationPath.c_str(), index)
+			sortSpec.destinationPath.c_str(), index)
 			continue;
 		}
 
@@ -467,7 +467,7 @@ bool Cmd_GetUIFloatInherited_Execute(COMMAND_ARGS)
 				checkLast = next + 1;
 			}
 
-			// Check for inharited trait type
+			// Check for inherited trait type
 			bool isPos = (_stricmp(traitName, "x") == 0 ||
 				_stricmp(traitName, "y") == 0 ||
 				_stricmp(traitName, "depth") == 0);
